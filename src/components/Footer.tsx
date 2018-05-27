@@ -18,10 +18,11 @@ export class Footer extends React.Component<{}, {}> {
                     Dashboard for GitHub -<a href={this.githubUrl} target='_blank'>
                         {' '}
                         {this.user}{' '}
-                    </a>
+                    </a>,
+                    Powered by <a href="mailto:zb@bndy.net">Bendy Zhang</a> © <a href="http://bndy.net" target="_blank">BNDY-NET</a>
                 </div>
                 <div className='col-md-6 text-right'>
-                    <i>Powered by <a href="mailto:zb@bndy.net">Bendy Zhang</a> © <a href="http://bndy.net" target="_blank">BNDY-NET</a> - v{APP_VERSION} build {APP_BUILD}</i>
+                    v{APP_VERSION} build {APP_BUILD}
                 </div>
             </footer>
         );
