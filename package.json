@@ -1,0 +1,74 @@
+{
+  "name": "github-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard for your github.",
+  "private": true,
+  "scripts": {
+    "build": "webpack --mode production",
+    "watch": "webpack --watch",
+    "start": "webpack-dev-server --mode development --open",
+    "server": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bndynet/github-dashboard.git"
+  },
+  "keywords": [
+    "github",
+    "dashboard"
+  ],
+  "author": "Bendy Zhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bndynet/github-dashboard/issues"
+  },
+  "homepage": "https://github.com/bndynet/github-dashboard#readme",
+  "dependencies": {
+    "@octokit/rest": "^15.7.0",
+    "bootstrap": "^3.3.7",
+    "chart.js": "^2.7.2",
+    "color": "^3.0.0",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.1",
+    "randomcolor": "^0.5.3",
+    "react": "^16.4.0",
+    "react-bootstrap": "^0.32.1",
+    "react-chartjs-2": "^2.7.2",
+    "react-dom": "^16.4.0",
+    "react-spinners": "^0.3.2"
+  },
+  "devDependencies": {
+    "@types/chart.js": "^2.7.18",
+    "@types/lodash": "^4.14.109",
+    "@types/node": "^10.1.3",
+    "@types/randomcolor": "^0.4.3",
+    "@types/react": "^16.3.14",
+    "@types/react-bootstrap": "^0.32.9",
+    "@types/react-dom": "^16.0.5",
+    "awesome-typescript-loader": "^5.0.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
+    "css-loader": "^0.28.11",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.8.2",
+    "file-loader": "^1.1.11",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.0",
+    "print-time-webpack": "^2.0.3",
+    "sass-loader": "^7.0.1",
+    "source-map-loader": "^0.2.3",
+    "style-loader": "^0.21.0",
+    "typescript": "^2.8.3",
+    "url-loader": "^1.0.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
+  }
+}

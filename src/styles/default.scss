@@ -1,0 +1,52 @@
+/* bootstrap */
+
+.panel-body {
+    height: 286px;
+    .list-group {
+        position: relative;
+        margin: -15px;
+        .list-group-item {
+            border-left: none;
+            border-right: none;
+            &:first-child {
+                border-top: none;
+            }
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+.glyphicon {
+    top: 3px;
+}
+
+/**/
+
+body {
+    padding: 2rem;
+}
+
+footer {
+    color: #aaa;
+    a {
+        color: #aaa;
+        font-weight: bold;
+    }
+}
+
+.ui-loading {
+    background-color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    width: calc(100% - 32px);
+    height: calc(100% - 63px);
+    display: flex;
+    align-items: center;
+    margin-top: -15px;
+    margin-left: -15px;
+    &>div {
+        flex: 1;
+        text-align: center;
+    }
+}
