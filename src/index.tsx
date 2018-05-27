@@ -1,16 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/default';
+import 'react-toastify/dist/ReactToastify.css';
 
 import * as _ from 'lodash';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as moment from 'moment';
 import { Grid, Row, Col, Tooltip, ButtonToolbar, OverlayTrigger, Button } from 'react-bootstrap';
+import { UserPanel } from './components/UserPanel';
 import { LineChart, LineChartData, LineChartDataItem, LineChartDataItemOption } from './components/ChartLine';
 import { IssueList } from './components/IssueList';
 import { GitHub } from './api/GitHub';
 import { ChartDoughnut } from './components/ChartDoughnut';
 import { Footer } from './components/Footer';
+
+import { ToastContainer } from 'react-toastify';
 
 const dateFormat = 'DD/MM';
 const maxIssues = 7;
@@ -18,6 +22,9 @@ const maxIssues = 7;
 interface IndexProps {}
 
 interface IndexState {
+    isLoadingUser: boolean;
+    user: any;
+
     isLoadingEvent: boolean;
     eventChartData: LineChartData;
 
@@ -32,6 +39,9 @@ class Index extends React.Component<IndexProps, IndexState> {
     constructor(props: IndexProps) {
         super(props);
         this.state = {
+            isLoadingUser: false,
+            user: null,
+
             isLoadingEvent: false,
             eventChartData: new LineChartData(),
 
@@ -43,47 +53,71 @@ class Index extends React.Component<IndexProps, IndexState> {
     }
 
     componentDidMount() {
+        this._initUser();
         this._initIssues();
         this._initEvents();
     }
 
     render() {
         return (
-            <Grid>
-                <Row>
-                    <Col md={12}>
-                        <LineChart
-                            title='Activity'
-                            theme='primary'
-                            data={this.state.eventChartData}
-                            loading={this.state.isLoadingEvent}
-                        />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={6}>
-                        <ChartDoughnut
-                            title='Issues'
-                            data={this.state.issueChartData}
-                            loading={this.state.isLoadingEvent}
-                        />
-                    </Col>
-                    <Col md={6}>
-                        <IssueList title='Latest Issues' data={this.state.issues} loading={this.state.isLoadingIssues} />
-                    </Col>
-                </Row>
-                <Row>
-                    <Col md={12}>
-                        <Footer></Footer>
-                    </Col>
-                </Row>
-            </Grid>
+            <div>
+                <Grid>
+                    <Row>
+                        {this.state.user && (
+                            <Col md={3}>
+                                <UserPanel loading={this.state.isLoadingUser} data={this.state.user} />
+                            </Col>
+                        )}
+                        <Col md={this.state.user?9:12}>
+                            <LineChart
+                                title='Activity'
+                                data={this.state.eventChartData}
+                                loading={this.state.isLoadingEvent}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={6}>
+                            <IssueList
+                                title='Latest Issues'
+                                data={this.state.issues}
+                                loading={this.state.isLoadingIssues}
+                            />
+                        </Col>
+                        <Col md={6}>
+                            <ChartDoughnut
+                                title='Issues'
+                                data={this.state.issueChartData}
+                                loading={this.state.isLoadingEvent}
+                            />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                            <Footer />
+                        </Col>
+                    </Row>
+                </Grid>
+                <ToastContainer />
+            </div>
         );
+    }
+
+    _initUser() {
+        this.setState({
+            isLoadingUser: true
+        });
+        this.githubApi.getUser().then((result: any) => {
+            this.setState({
+                isLoadingUser: false,
+                user: result
+            });
+        });
     }
 
     _initIssues() {
         this.setState({
-            isLoadingIssues: true,
+            isLoadingIssues: true
         });
 
         this.githubApi.getIssues().then((result: any) => {
@@ -115,7 +149,7 @@ class Index extends React.Component<IndexProps, IndexState> {
 
     _initEvents() {
         this.setState({
-            isLoadingEvent: true,
+            isLoadingEvent: true
         });
 
         this.githubApi.getEvents().then((result: any[]) => {

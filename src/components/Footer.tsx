@@ -15,14 +15,13 @@ export class Footer extends React.Component<{}, {}> {
         return (
             <footer className='row'>
                 <div className='col-md-6'>
-                    Dashboard for GitHub -<a href={this.githubUrl} target='_blank'>
+                    Dashboard v{APP_VERSION} for GitHub -<a href={this.githubUrl} target='_blank'>
                         {' '}
                         {this.user}{' '}
-                    </a>,
-                    Powered by <a href="mailto:zb@bndy.net">Bendy Zhang</a> © <a href="http://bndy.net" target="_blank">BNDY-NET</a>
+                    </a>
                 </div>
                 <div className='col-md-6 text-right'>
-                    v{APP_VERSION} build {APP_BUILD}
+                    Powered by <a href="mailto:zb@bndy.net">Bendy Zhang</a> © <a href="http://bndy.net" target="_blank">BNDY-NET</a>
                 </div>
             </footer>
         );

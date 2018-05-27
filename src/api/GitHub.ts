@@ -1,9 +1,9 @@
 import { appConfig } from '../lib/AppConfig';
+import { message } from '../lib/Message';
 
 export class GitHub {
     username: string;
     api: any;
-
     constructor() {
         this.api = require('@octokit/rest')();
         // username in querystring
@@ -22,6 +22,17 @@ export class GitHub {
         }
     }
 
+    getUser() {
+        return new Promise((resolve) => {
+            this.api.users.get({})
+                .then((result) => {
+                    resolve(result.data);
+                }, (err) => {
+                    message.warn('Failed to Get User Profile', 'Code ' + err.code + ': ' + JSON.parse(err.message).message);
+                });
+        });
+    }
+
     getIssues() {
         const q = 'author:' + this.username;
         const per_page = 100;
@@ -35,6 +46,8 @@ export class GitHub {
                 })
                 .then((result) => {
                     resolve(result.data);
+                }, (err) => {
+                    message.error('GitHub Error', err.code + ': ' + err.message);
                 });
         });
     }
@@ -52,6 +65,8 @@ export class GitHub {
                 })
                 .then((result) => {
                     resolve(result.data);
+                }, (err) => {
+                    message.error('GitHub Error', err.code + ': ' + err.message);
                 });
         });
     }
@@ -66,6 +81,8 @@ export class GitHub {
                 })
                 .then((result) => {
                     resolve(result.data);
+                }, (err) => {
+                    message.error('GitHub Error', err.code + ': ' + err.message);
                 });
         });
     }

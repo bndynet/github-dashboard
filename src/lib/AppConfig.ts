@@ -4,4 +4,4 @@ class AppConfig {
     githubUrl: string;
 }
 
-export const appConfig = require('../app-config.json');
+export const appConfig = process.env.NODE_ENV === 'production' ? require('../app-config.prod.json') : require('../app-config.json');

@@ -4,9 +4,9 @@
   "description": "Dashboard for your github.",
   "private": true,
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "webpack --config webpack.prod.js",
     "watch": "webpack --watch",
-    "start": "webpack-dev-server --mode development --open",
+    "start": "webpack-dev-server --open --config webpack.dev.js",
     "server": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -37,7 +37,8 @@
     "react-bootstrap": "^0.32.1",
     "react-chartjs-2": "^2.7.2",
     "react-dom": "^16.4.0",
-    "react-spinners": "^0.3.2"
+    "react-spinners": "^0.3.2",
+    "react-toastify": "^4.0.1"
   },
   "devDependencies": {
     "@types/chart.js": "^2.7.18",
@@ -68,7 +69,9 @@
     "typescript": "^2.8.3",
     "url-loader": "^1.0.1",
     "webpack": "^4.8.3",
+    "webpack-auto-inject-version": "^1.1.0",
     "webpack-cli": "^2.1.4",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "webpack-merge": "^4.1.2"
   }
 }

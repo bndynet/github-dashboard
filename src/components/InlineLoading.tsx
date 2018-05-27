@@ -12,7 +12,7 @@ export class InlineLoading extends React.Component<InlineLoadingProps, {}> {
     render() {
         return (
             <span className='ui-loading-inline'>
-                <ScaleLoader color={'#337ab7'} loading={this.props.loading} height={16} />
+                <ScaleLoader color={'#dddddd'} loading={this.props.loading} height={16} />
             </span>
         );
     }

@@ -5,10 +5,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const PrintTimeWebpackPlugin = require('print-time-webpack');
+const WebpackAutoInject = require('webpack-auto-inject-version');
 
 module.exports = {
     entry: './src/index.tsx',
-    devtool: 'inline-source-map',
     performance: {
         hints: false
     }, // disable to show warnings about performance
@@ -87,5 +87,38 @@ module.exports = {
             from: 'src/index.html',
             to: ''
         }]),
+        new WebpackAutoInject({
+            PACKAGE_JSON_PATH: './package.json',
+            components: {
+                InjectAsComment: true
+            },
+            componentsOptions: {
+                InjectAsComment: {
+                    tag: 'Build version: {version} - {date}',
+                    dateFormat: 'dddd, mmmm dS, yyyy, h:MM:ss TT'
+                }
+            }
+        })
     ],
+    optimization: {
+        splitChunks: {
+            chunks: "async",
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            name: true,
+            cacheGroups: {
+                default: {
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                },
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10
+                }
+            }
+        }
+    },
 };
