@@ -1,3 +1,4 @@
 {
-    "githubUser": "bndynet"
+    "githubUser": "bndynet",
+    "githubAgentUrl": "http://localhost:8001/authorize"
 }

@@ -50,6 +50,10 @@ body {
     padding: 2rem;
 }
 
+a {
+    cursor: pointer;
+}
+
 footer {
     color: #aaa;
     a {
@@ -89,6 +93,43 @@ footer {
             width: 80%;
             margin-bottom: 15px;
         }
+
+        .placeholder-user {
+            display: block;
+            width: 200px;
+            height: 200px;
+            border: solid 5px #fefefe;
+            border-radius: 50%;
+            margin: 20px auto;
+            padding: 20px 0;
+            background-color: #aaa;
+
+            &:hover {
+                background-color: #337ab7;
+
+                i {
+                    color: #fefefe;
+                    &::after {
+                        color: #337ab7;
+                    }
+                }
+            }
+
+            i {
+                font-size: 120px;
+                color: #fefefe;
+
+                &:after {
+                    content: "?";    
+                    position: absolute;
+                    color: #aaa;   
+                    left: 42px;
+                    top: -10px;
+                    font-size: 80px;
+                }
+            }
+        }
+
         strong {
             display: block;
             font-size: 1.2em;

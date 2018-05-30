@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { appConfig } from '../lib/AppConfig';
 
-export class Footer extends React.Component<{}, {}> {
-    user: string;
+
+interface FooterProps {
+    user: any;
+}
+
+export class Footer extends React.Component<FooterProps, {}> {
     githubUrl: string;
 
-    constructor(props) {
+    constructor(props: FooterProps) {
         super(props);
-        this.user = appConfig.githubUser;
-        this.githubUrl = appConfig.getGithubUrl();
+        this.githubUrl = appConfig.getGithubUrl(this.props.user);
     }
 
     render() {
@@ -17,7 +20,7 @@ export class Footer extends React.Component<{}, {}> {
                 <div className='col-md-6'>
                     Dashboard v{APP_VERSION} for GitHub -<a href={this.githubUrl} target='_blank'>
                         {' '}
-                        {this.user}{' '}
+                        {this.props.user}{' '}
                     </a>
                 </div>
                 <div className='col-md-6 text-right'>

@@ -13,6 +13,7 @@ import { IssueList } from './components/IssueList';
 import { GitHub } from './api/GitHub';
 import { ChartDoughnut } from './components/ChartDoughnut';
 import { Footer } from './components/Footer';
+import { appConfig } from './lib/AppConfig';
 
 import { ToastContainer } from 'react-toastify';
 
@@ -35,12 +36,32 @@ interface IndexState {
 
 class Index extends React.Component<IndexProps, IndexState> {
     githubApi: GitHub;
+    needToLoadUser: boolean;
 
     constructor(props: IndexProps) {
         super(props);
+        // access token
+        let accessTokenMatched = window.location.search.match(/\?access_token=([^&]+)/);
+        if (accessTokenMatched && accessTokenMatched.length > 1) {
+            let accessToken = accessTokenMatched[1];
+            appConfig.setGithubAccessToken(accessToken);
+            window.location.href = '/';
+            return;
+        }
+
+        let githubUser = appConfig.githubUser;
+        // username in querystring
+        let gu = window.location.search.match(/\?gu=([^&]+)/);
+        if (gu && gu.length > 1) {
+            githubUser = appConfig.githubUser = gu[1];
+            appConfig.setGithubAccessToken(null);
+        }
+
+        this.githubApi = new GitHub(githubUser);
+
         this.state = {
             isLoadingUser: false,
-            user: null,
+            user: {},
 
             isLoadingEvent: false,
             eventChartData: new LineChartData(),
@@ -49,13 +70,17 @@ class Index extends React.Component<IndexProps, IndexState> {
             issueChartData: [],
             isLoadingIssues: false
         };
-        this.githubApi = new GitHub();
     }
 
     componentDidMount() {
-        this._initUser();
-        this._initIssues();
-        this._initEvents();
+        if (appConfig.getGithubAccessToken()) {
+            this.needToLoadUser = true;
+            this._initDataViaOAuth();
+        } else {
+            this.needToLoadUser = false;
+            this._initIssues();
+            this._initEvents();
+        }
     }
 
     render() {
@@ -63,12 +88,10 @@ class Index extends React.Component<IndexProps, IndexState> {
             <div>
                 <Grid>
                     <Row>
-                        {this.state.user && (
-                            <Col md={3}>
-                                <UserPanel loading={this.state.isLoadingUser} data={this.state.user} />
-                            </Col>
-                        )}
-                        <Col md={this.state.user?9:12}>
+                        <Col md={3}>
+                            <UserPanel loading={this.state.isLoadingUser} data={this.state.user} />
+                        </Col>
+                        <Col md={9}>
                             <LineChart
                                 title='Activity'
                                 data={this.state.eventChartData}
@@ -94,7 +117,7 @@ class Index extends React.Component<IndexProps, IndexState> {
                     </Row>
                     <Row>
                         <Col md={12}>
-                            <Footer />
+                            <Footer user={appConfig.githubUser} />
                         </Col>
                     </Row>
                 </Grid>
@@ -103,7 +126,7 @@ class Index extends React.Component<IndexProps, IndexState> {
         );
     }
 
-    _initUser() {
+    _initDataViaOAuth() {
         this.setState({
             isLoadingUser: true
         });
@@ -112,6 +135,9 @@ class Index extends React.Component<IndexProps, IndexState> {
                 isLoadingUser: false,
                 user: result
             });
+            this.githubApi = new GitHub(result.login);
+            this._initEvents();
+            this._initIssues();
         });
     }
 
@@ -153,6 +179,14 @@ class Index extends React.Component<IndexProps, IndexState> {
         });
 
         this.githubApi.getEvents().then((result: any[]) => {
+            this.setState({
+                isLoadingEvent: false,
+            });
+
+            if (result && result.length === 0) {
+                return;
+            }
+
             let eventChartData = new LineChartData();
             let groups = _.groupBy(result, (event) => {
                 return moment(event.created_at).format(dateFormat);
@@ -200,7 +234,6 @@ class Index extends React.Component<IndexProps, IndexState> {
             });
 
             this.setState({
-                isLoadingEvent: false,
                 eventChartData: eventChartData
             });
         });

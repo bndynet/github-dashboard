@@ -1,3 +1,4 @@
 {
-    "githubUser": "bndynet"
+    "githubUser": "bndynet",
+    "githubAgentUrl": "http://api.bndy.net/oauth/authorize"
 }
