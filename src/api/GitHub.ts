@@ -1,18 +1,19 @@
 import { appConfig } from '../lib/AppConfig';
 import { message } from '../lib/Message';
+import { access } from 'fs';
 
 export class GitHub {
     username: string;
     api: any;
-    constructor() {
+    constructor(username: string) {
         this.api = require('@octokit/rest')();
-        // username in querystring
-        let gu = window.location.search.match(/\?gu=([^&]+)/);
-        if (gu && gu.length > 1) {
-            this.username = gu[1];
-            appConfig.githubUser = this.username;
-        } else {
-            this.username = appConfig.githubUser;
+        this.username = username || appConfig.githubUser;
+        appConfig.githubUser = this.username;
+        if (appConfig.getGithubAccessToken()) {
+            this.api.authenticate({
+                type: 'oauth',
+                token: appConfig.getGithubAccessToken(),
+            });
         }
     }
 

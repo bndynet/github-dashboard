@@ -1,11 +1,23 @@
 class AppConfig {
     githubUser: string;
+    githubAgentUrl: string;
 
-    public getGithubAccessToken() {
-
+    public setGithubAccessToken(token: string) {
+        if (token) {
+            sessionStorage.setItem('github-token', token);
+        } else {
+            sessionStorage.removeItem('github-token');
+        }
     }
 
-    public getGithubUrl () {
+    public getGithubAccessToken() {
+        return sessionStorage.getItem('github-token');
+    }
+
+    public getGithubUrl (user?: string) {
+        if (user) {
+            return 'https://github.com/' + user;
+        }
         return 'https://github.com/' + this.githubUser;
     }
 }
