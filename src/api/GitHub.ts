@@ -13,12 +13,6 @@ export class GitHub {
             appConfig.githubUser = this.username;
         } else {
             this.username = appConfig.githubUser;
-            if (appConfig.githubToken) {
-                this.api.authenticate({
-                    type: 'token',
-                    token: appConfig.githubToken,
-                });
-            }
         }
     }
 
@@ -28,7 +22,7 @@ export class GitHub {
                 .then((result) => {
                     resolve(result.data);
                 }, (err) => {
-                    message.warn('Failed to Get User Profile', 'Code ' + err.code + ': ' + JSON.parse(err.message).message);
+                    //message.warn('Failed to Get User Profile', 'Code ' + err.code + ': ' + JSON.parse(err.message).message);
                 });
         });
     }

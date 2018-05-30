@@ -10,7 +10,7 @@
 
 ## Development
 
-#### react-chartjs-2
+### react-chartjs-2
 
 **Custom size**
 

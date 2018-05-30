@@ -8,7 +8,7 @@ export class Footer extends React.Component<{}, {}> {
     constructor(props) {
         super(props);
         this.user = appConfig.githubUser;
-        this.githubUrl = appConfig.githubUrl;
+        this.githubUrl = appConfig.getGithubUrl();
     }
 
     render() {
