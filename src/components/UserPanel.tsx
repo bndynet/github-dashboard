@@ -48,7 +48,7 @@ export class UserPanel extends React.Component<UserPanelProps, {}> {
     }
 
     getDetail () {
-        location.href = `${appConfig.githubAgentUrl}?redirect_uri=${location.origin}`;
+        location.href = `${appConfig.githubAgentUrl}?redirect_uri=${location.origin}&target=github`;
     }
 
 }
