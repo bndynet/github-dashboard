@@ -1,5 +1,7 @@
 # Dashboard for GitHub
 
+![](http://bndynet.github.io/github-dashboard/images/gh-dashboard.png)
+
 ## Start Application
 
 - `npm install `
