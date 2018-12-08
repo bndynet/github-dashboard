@@ -1,4 +1,4 @@
 {
     "githubUser": "bndynet",
-    "githubAgentUrl": "http://cloud.bndy.net/service/oauth/authorize"
+    "githubAgentUrl": "http://cloud.bndy.net/service-oauth/authorize"
 }

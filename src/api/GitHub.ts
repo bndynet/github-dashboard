@@ -1,6 +1,5 @@
 import { appConfig } from '../lib/AppConfig';
 import { message } from '../lib/Message';
-import { access } from 'fs';
 
 export class GitHub {
     username: string;
